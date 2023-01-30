@@ -34,7 +34,7 @@ class IllegalCharError(Error):
 #######################################
 
 #[BEN]: Save the current index, line, column, ftxt in variables
-#       wtf does ftxt mean/store?
+#       what does ftxt mean/store?
 class Position:
     def __init__(self, idx, ln, col, ftxt):
         self.idx = idx
@@ -79,7 +79,6 @@ class Token:
         self.type = type_ #[BEN]: Token Type
         self.value = value #[BEN]: Token Value
     
-    #[BEN, TODO]: Learn what __repr__ means + wtf this does
     def __repr__(self):
         if self.value: return f'{self.type}:{self.value}'
         return f'{self.type}'
@@ -92,21 +91,19 @@ class Token:
 class Lexer:
     def __init__(self, text):
         self.text = text
-        self.pos = Position(-1, 0, -1, text) #[BEN]: wtf
+        self.pos = Position(-1, 0, -1, text)
         self.current_char = None #[BEN]: Store the current character in a variable
         self.advance() #[BEN]: Advance one character in the command 
     
-    #[BEN]: Define what advance() even means. Why the fuck didn't I implement this sooner? idk
     def advance(self):
-        self.pos.advance(self.current_char) #[BEN]: wtf
-        self.current_char = self.text[self.pos.idx] if self.pos.idx < len(self.text) else None #[BEN]: wtf
+        self.pos.advance(self.current_char)
+        self.current_char = self.text[self.pos.idx] if self.pos.idx < len(self.text) else None
 
     #[BEN]: Define a empty list of tokens, to be filled below
     def make_tokens(self):
         tokens = []
 
         #[BEN]: Check what the current char is, store it as a Token in the tokens[] list
-        #[BEN, TODO]: Make this a fucking switch statement, inefficient as fuck
         while self.current_char != None:
             if self.current_char in ' \t':
                 self.advance()
@@ -154,7 +151,7 @@ class Lexer:
                 dot_count += 1 #[BEN]: Increment the dot count
                 num_str += '.' #[BEN]: Store the dot for maths later on
             else:
-                num_str += self.current_char #[BEN]: If there's no dot, fuck off and continue
+                num_str += self.current_char #[BEN]: If there's no dot -> continue
             self.advance() #[BEN]: Goto next char
 
         if dot_count == 0: #[BEN]: If there's no dot in the number, it's an INT
@@ -166,7 +163,7 @@ class Lexer:
 # RUN
 #######################################
 
-#[BEN]: Define the function that makes the code go brr
+#[BEN]: Define the function that makes the code function
 def run(text):
     lexer = Lexer(text)
     tokens, error = lexer.make_tokens()
